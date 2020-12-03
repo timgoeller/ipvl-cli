@@ -10,5 +10,12 @@
   "license": "AGPL-3.0-or-later",
   "devDependencies": {
     "standard": "^16.0.3"
+  },
+  "dependencies": {
+    "chalk": "^4.1.0",
+    "commander": "^7.0.0-1",
+    "fs-extra": "^9.0.1",
+    "versioned-file-log": "^0.0.2",
+    "vfl-storage-provider-ipfs-http": "^0.0.1"
   }
 }
