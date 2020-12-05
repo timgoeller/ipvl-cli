@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 const { Command } = require('commander')
 const FileLog = require('versioned-file-log')
 const IPFSStorageProviderHTTP = require('vfl-storage-provider-ipfs-http')

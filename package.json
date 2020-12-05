@@ -1,6 +1,6 @@
 {
-  "name": "ipvl-cli",
-  "version": "0.0.1",
+  "name": "ipvl",
+  "version": "0.0.3",
   "description": "ipfs-versioned-file-log cli",
   "main": "index.js",
   "scripts": {
@@ -19,5 +19,8 @@
     "parse-gitignore": "^1.0.1",
     "versioned-file-log": "^0.1.0",
     "vfl-storage-provider-ipfs-http": "^0.0.2"
+  },
+  "bin": {
+    "ipvl": "src/cli.js"
   }
 }
