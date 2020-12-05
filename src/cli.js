@@ -65,11 +65,27 @@ async function publish (projectPath, version, force = false) {
   await releaseVersion(version, paths)
 }
 
-function update (path, version) {
-  console.log(path)
+async function update (projectPath, version) {
+  const paths = getStandardFolderPaths(projectPath, version)
+
+  const pathExists = await fse.pathExists(projectPath)
+
+  if (!pathExists) {
+    console.error(chalk.redBright('The folder you want to publish doesn\'t seem to exist.'))
+    process.exit(1)
+  }
+
+  const ipvlFolderExists = await fse.pathExists(paths.ipvl)
+
+  if (!ipvlFolderExists) {
+    console.error(chalk.redBright('I wasn\'t able to find a log here. Try using the publish command instead.'))
+    process.exit(1)
+  }
+
+  releaseVersion(version, paths)
 }
 
-async function releaseVersion (version, paths = getStandardFolderPaths()) {
+async function releaseVersion (version, paths) {
   try {
     await fse.emptyDir(paths.ipvlVersionData)
   } catch (err) {
@@ -136,13 +152,13 @@ async function releaseVersion (version, paths = getStandardFolderPaths()) {
     author: packageJson.author,
     version
   })
-  console.log(chalk.greenBright(`Version ${version} successfully published to IPFS!`))
-  console.log()
-  console.log(chalk.greenBright('Public key: ' + chalk.underline(fileLog.feed.key.toString('hex'))))
-  console.log()
-  console.log(chalk.greenBright('Secret key: ' + chalk.underline(fileLog.feed.secretKey.toString('hex'))) + chalk.redBright(' (Psst, keep secret!)'))
-  console.log()
-  console.log(chalk.greenBright('Discovery key: ' + chalk.underline(fileLog.feed.discoveryKey.toString('hex'))))
+  log(chalk.greenBright(`Version ${version} successfully published to IPFS!`))
+  log()
+  log(chalk.greenBright('Public key: ' + chalk.underline(fileLog.feed.key.toString('hex'))))
+  log()
+  log(chalk.greenBright('Secret key: ' + chalk.underline(fileLog.feed.secretKey.toString('hex'))) + chalk.redBright(' (Psst, keep secret!)'))
+  log()
+  log(chalk.greenBright('Discovery key: ' + chalk.underline(fileLog.feed.discoveryKey.toString('hex'))))
 }
 
 function getStandardFolderPaths (projectPath, version) {
